@@ -1,6 +1,6 @@
 <template>
     <div>
-        孙子:{{value}}
+        孙子1:{{value}}
         {{this.parent.isSmoke}}
         <button @click="changeParent">修改父亲</button>
     </div>
@@ -14,7 +14,7 @@ export default {
             //  this.$bus.$emit('有人找我了','xxx')
         // })
         this.$nextTick(()=>{
-            this.$bus.$emit('有人找我了','xxx')
+            this.$bus.$emit('有人找我了','bus传值')
         })
     },
     // 注入 parent组件

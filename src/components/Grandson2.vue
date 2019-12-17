@@ -1,6 +1,6 @@
 <template>
     <div>
-        孙子二 {{$attrs}}
+        孙子2 {{$attrs}}
     </div>
 </template>
 

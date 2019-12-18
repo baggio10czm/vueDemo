@@ -6,8 +6,8 @@
 
 <script>
 export default {
-    mounted(){
-        this.$listeners.son()
-    }
-}
+  mounted() {
+    this.$listeners.son();
+  },
+};
 </script>

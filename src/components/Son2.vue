@@ -10,19 +10,19 @@
 </template>
 
 <script>
+import Grandson2 from './Grandson2.vue';
 
-import Grandson2 from './Grandson2'
 export default {
-    components:{
-        Grandson2
-    },
-    // 继承属性不在标签上显示
-    inheritAttrs:false,
-    mounted(){
-        this.$bus.$on('有人找我了',function(value){
-            // eslint-disable-next-line no-console
-            console.log('son2:$bus.$on呵呵~~~~' + value)
-        });
-    }
-}
+  components: {
+    Grandson2,
+  },
+  // 继承属性不在标签上显示
+  inheritAttrs: false,
+  mounted() {
+    this.$bus.$on('有人找我了', (value) => {
+      // eslint-disable-next-line no-console
+      console.log(`son2:$bus.$on呵呵~~~~${value}`);
+    });
+  },
+};
 </script>

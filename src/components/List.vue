@@ -8,20 +8,20 @@
 </template>
 
 <script>
-    import ListItem from "./ListItem";
+import ListItem from './ListItem';
 
-    export default {
-        components: {
-            ListItem
-        },
-        props: {
-            render: {
-                type: Function
-            },
-            data: {
-                type: Array,
-                default: () => []
-            }
-        }
-    }
+export default {
+  components: {
+    ListItem,
+  },
+  props: {
+    render: {
+      type: Function,
+    },
+    data: {
+      type: Array,
+      default: () => [],
+    },
+  },
+};
 </script>

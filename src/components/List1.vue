@@ -7,15 +7,15 @@
 </template>
 
 <script>
-    export default {
-        props: {
-            render: {
-                type: Function
-            },
-            data: {
-                type: Array,
-                default: () => []
-            }
-        }
-    }
+export default {
+  props: {
+    render: {
+      type: Function,
+    },
+    data: {
+      type: Array,
+      default: () => [],
+    },
+  },
+};
 </script>

@@ -27,123 +27,177 @@
         </List1>
 
         <Table style="margin-top: 20px;" border :columns="columns" :data="data"></Table>
+
+
+      <h3 style="margin-top: 30px;">--------第三课--级联组件------</h3>
+      <Cascade :options="options"></Cascade>
     </div>
 </template>
 <script>
-    import Parent from './components/Parent'
-    // 实现一个小组件 标题组件 Level type="6"
-    // 函数式组件 没有模板 必须要有一个render函数
-    import Level from './components/LevelFunctional.js';
-    import List from './components/List';
-    import List1 from './components/List1'
+import Parent from './components/Parent.vue';
+// 实现一个小组件 标题组件 Level type="6"
+// 函数式组件 没有模板 必须要有一个render函数
+// eslint-disable-next-line import/extensions
+import Level from './components/LevelFunctional.js';
+import List from './components/List.vue';
+import List1 from './components/List1.vue';
 
-    export default {
-        // 生命周期 不能是created
-        mounted() {
-            this.$broadcast('say')
+import Cascade from './cascade/cascade.vue';
+
+export default {
+  // 生命周期 不能是created
+  mounted() {
+    this.$broadcast('say');
+  },
+  data() {
+    return {
+      tag: 'h3',
+      currentIndex: -1,
+      columns: [
+        {
+          title: 'Name',
+          key: 'name',
+          render: this.tableRender,
         },
-        data() {
-            return {
-                tag: "h3",
-                currentIndex: -1,
-                columns: [
-                    {
-                        title: 'Name',
-                        key: 'name',
-                        render: this.tableRender
-                    },
-                    {
-                        title: 'Age',
-                        key: 'age'
-                    },
-                    {
-                        title: 'Address',
-                        key: 'address'
-                    }
-                ],
-                data: [
-                    {
-                        name: 'John Brown',
-                        age: 18,
-                        address: 'New York No. 1 Lake Park',
-                        date: '2016-10-03'
-                    },
-                    {
-                        name: 'Jim Green',
-                        age: 24,
-                        address: 'London No. 1 Lake Park',
-                        date: '2016-10-01'
-                    },
-                    {
-                        name: 'Joe Black',
-                        age: 30,
-                        address: 'Sydney No. 1 Lake Park',
-                        date: '2016-10-02'
-                    },
-                    {
-                        name: 'Jon Snow',
-                        age: 26,
-                        address: 'Ottawa No. 2 Lake Park',
-                        date: '2016-10-04'
-                    }
-                ]
-            }
+        {
+          title: 'Age',
+          key: 'age',
         },
-        methods: {
-            render(h, data) { // data是函数式组件在list组件中每次循环出来的结果
-                return h(this.tag, data)
+        {
+          title: 'Address',
+          key: 'address',
+        },
+      ],
+      data: [
+        {
+          name: 'John Brown',
+          age: 18,
+          address: 'New York No. 1 Lake Park',
+          date: '2016-10-03',
+        },
+        {
+          name: 'Jim Green',
+          age: 24,
+          address: 'London No. 1 Lake Park',
+          date: '2016-10-01',
+        },
+        {
+          name: 'Joe Black',
+          age: 30,
+          address: 'Sydney No. 1 Lake Park',
+          date: '2016-10-02',
+        },
+        {
+          name: 'Jon Snow',
+          age: 26,
+          address: 'Ottawa No. 2 Lake Park',
+          date: '2016-10-04',
+        },
+      ],
+      options: [
+        {
+          value: 'beijing',
+          label: '北京',
+          children: [
+            {
+              value: 'gugong',
+              label: '故宫',
             },
-            tableRender(h, {row, column, index}) {
-                return h("div",[h("h1", {
-                    style: {
-                        display: this.currentIndex === index ? "none" : "block"
-                    },
-                    on: {
-                        click: (e) => {
-                            this.currentIndex = index
-                            // 渲染完之后
-                            this.$nextTick(()=> {
-                                // 全选 + 获取焦点...
-                                e.target.parentNode.children[1].children[0].children[1].select()
-                                e.target.parentNode.getElementsByTagName('input')[0].focus()
-                            })
-                        }
-                    }
-                }, row[column.key]),
-                h('i-input',{
-                        props: {
-                            value: row[column.key],
-                        },
-                        style: {
-                            display: this.currentIndex === index ? "block" : "none"
-                        },
-                        on: {
-                            input: (value) => {
-                                row[column.key] = value
-                            },
-                            "on-enter": () => {
-                                this.data.splice(index,1,row)
-                                this.currentIndex = -1
-                            },
-                            "on-blur": () => {
-                                this.data.splice(index,1,row)
-                                this.currentIndex = -1
-                            }
-                        }
-                    }
-                )])
-            }
+            {
+              value: 'tiantan',
+              label: '天坛',
+            },
+            {
+              value: 'wangfujing',
+              label: '王府井',
+            },
+          ],
         },
-        components: {
-            Parent,
-            Level,
-            List,
-            List1
-        }
-    }
+        {
+          value: 'jiangsu',
+          label: '江苏',
+          children: [
+            {
+              value: 'nanjing',
+              label: '南京',
+              children: [
+                {
+                  value: 'fuzimiao',
+                  label: '夫子庙',
+                },
+              ],
+            },
+            {
+              value: 'suzhou',
+              label: '苏州',
+              children: [
+                {
+                  value: 'zhuozhengyuan',
+                  label: '拙政园',
+                },
+                {
+                  value: 'shizilin',
+                  label: '狮子林',
+                },
+              ],
+            },
+          ],
+        }],
+    };
+  },
+  methods: {
+    render(h, data) { // data是函数式组件在list组件中每次循环出来的结果
+      return h(this.tag, data);
+    },
+    tableRender(h, { row, column, index }) {
+      return h('div', [h('h1', {
+        style: {
+          display: this.currentIndex === index ? 'none' : 'block',
+        },
+        on: {
+          click: (e) => {
+            this.currentIndex = index;
+            // 渲染完之后
+            this.$nextTick(() => {
+              // 全选 + 获取焦点...
+              e.target.parentNode.children[1].children[0].children[1].select();
+              e.target.parentNode.getElementsByTagName('input')[0].focus();
+            });
+          },
+        },
+      }, row[column.key]),
+      h('i-input', {
+        props: {
+          value: row[column.key],
+        },
+        style: {
+          display: this.currentIndex === index ? 'block' : 'none',
+        },
+        on: {
+          // eslint-disable-next-line no-return-assign,no-param-reassign
+          input: value => row[column.key] = value,
+          'on-enter': () => {
+            this.data.splice(index, 1, row);
+            this.currentIndex = -1;
+          },
+          'on-blur': () => {
+            this.data.splice(index, 1, row);
+            this.currentIndex = -1;
+          },
+        },
+      })]);
+    },
+  },
+  components: {
+    Parent,
+    Level,
+    List,
+    List1,
+    Cascade,
+  },
+};
 </script>
-<style>
-    body {
-        color: #000000;
-    }
+<style lang="stylus">
+    body
+        color: #000000
 </style>

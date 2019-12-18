@@ -22,35 +22,35 @@
 </template>
 
 <script>
-    // 希望数据被儿子公用  不希望传递来传递去 像react context Provider consumer
-    // 注入数据 可以 随便写 可以把父组件直接注入进去
-    // eventBus 定义到了全局上
-    import Son1 from './Son1';
-    import Son2 from './Son2';
+// 希望数据被儿子公用  不希望传递来传递去 像react context Provider consumer
+// 注入数据 可以 随便写 可以把父组件直接注入进去
+// eventBus 定义到了全局上
+import Son1 from './Son1.vue';
+import Son2 from './Son2.vue';
 
-    export default {
-        mounted() {
-            this.$refs.son1.refFn(); // 我也一个组件
-        },
-        data() {
-            return {mny: 100, isSmoke: '不要吸烟'}
-        },
-        // 一般业务中不使用，框架里有用
-        provide() {
-            return {parent: this}
-        },
-        methods: {
-            son() {
-                // eslint-disable-next-line no-console
-                console.log('parent:Grandson2触发了')
-            },
-            change(value) {
-                this.mny = value;
-            }
-        },
-        components: {
-            Son1,
-            Son2
-        }
-    }
+export default {
+  mounted() {
+    this.$refs.son1.refFn(); // 我也一个组件
+  },
+  data() {
+    return { mny: 100, isSmoke: '不要吸烟' };
+  },
+  // 一般业务中不使用，框架里有用
+  provide() {
+    return { parent: this };
+  },
+  methods: {
+    son() {
+      // eslint-disable-next-line no-console
+      console.log('parent:Grandson2触发了');
+    },
+    change(value) {
+      this.mny = value;
+    },
+  },
+  components: {
+    Son1,
+    Son2,
+  },
+};
 </script>

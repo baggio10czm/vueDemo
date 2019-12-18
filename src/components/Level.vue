@@ -23,12 +23,12 @@
 
 <script>
 export default {
-    props:{
-        t:{
-            type:Number
-        }
-    }
-}
+  props: {
+    t: {
+      type: Number,
+    },
+  },
+};
 </script>
 
 <style scoped>

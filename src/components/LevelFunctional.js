@@ -5,7 +5,7 @@ export default {
     render(h){ // createElement
         // html 以< 开头 {
         let tag = 'h'+ this.t;
-        return h(tag, this.$slots.default)
+        return h(tag,{style:{display: "inline",marginRight:"20px"}}, this.$slots.default)
 
         // h1 on-click={()=>{alert(1)}} style={{color:'red'}}>你好</h1>
         // h('h1',{

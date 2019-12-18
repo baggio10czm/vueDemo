@@ -3,12 +3,13 @@
         <h3>--------第一课--------</h3>
         <Parent></Parent>
 
-        <h3>--------第二课--------</h3>
-        <Level :t="1">标题</Level>
-        <Level :t="2">标题</Level>
-        <Level :t="3">标题</Level>
-        <Level :t="4">标题</Level>
-        <Level :t="5">标题</Level>
+        <h3 style="margin-top: 30px;">--------第二课--------</h3>
+        <Level :t="1">h1标题</Level>
+        <Level :t="2">h2标题</Level>
+        <Level :t="3">h3标题</Level>
+        <Level :t="4">h4标题</Level>
+        <Level :t="5">h5标题</Level>
+        <Level :t="5">h6标题</Level>
 
         <!-- 提供render  element-ui tree -->
         <List :data="['香蕉','苹果','橘子']" :render="render"></List>
@@ -25,7 +26,7 @@
             </template>
         </List1>
 
-        <Table border :columns="columns" :data="data"></Table>
+        <Table style="margin-top: 20px;" border :columns="columns" :data="data"></Table>
     </div>
 </template>
 <script>
@@ -102,9 +103,6 @@
                             this.currentIndex = index
                             // 渲染完之后
                             this.$nextTick(()=> {
-                                // 可试试 ref
-
-
                                 // 全选 + 获取焦点...
                                 e.target.parentNode.children[1].children[0].children[1].select()
                                 e.target.parentNode.getElementsByTagName('input')[0].focus()
@@ -112,11 +110,9 @@
                         }
                     }
                 }, row[column.key]),
-                h('i-input',
-                    {
+                h('i-input',{
                         props: {
                             value: row[column.key],
-                            ref: 'myRef'
                         },
                         style: {
                             display: this.currentIndex === index ? "block" : "none"
@@ -126,6 +122,11 @@
                                 row[column.key] = value
                             },
                             "on-enter": () => {
+                                this.data.splice(index,1,row)
+                                this.currentIndex = -1
+                            },
+                            "on-blur": () => {
+                                this.data.splice(index,1,row)
                                 this.currentIndex = -1
                             }
                         }
@@ -141,3 +142,8 @@
         }
     }
 </script>
+<style>
+    body {
+        color: #000000;
+    }
+</style>

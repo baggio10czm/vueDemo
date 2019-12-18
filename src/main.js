@@ -34,9 +34,7 @@ Vue.prototype.$broadcast = function(eventName,value){
       }
     })
   }
-
   broadcast(this.$children)
-
 }
 
 Vue.config.productionTip = false

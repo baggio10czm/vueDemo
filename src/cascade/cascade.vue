@@ -1,8 +1,8 @@
 <template>
     <div class="cascade" v-click-outside="close">
-      <div class="title" @click="toggle"></div>
+      <div class="title" @click="toggle">{{ value.map(item=>item.label).join('/') }}</div>
       <div class="cascade-content" v-if="isVisible">
-        <cascadeItem :options="options"></cascadeItem>
+        <cascadeItem :options="options" v-model="value" :level=0 @change="change"></cascadeItem>
       </div>
     </div>
 </template>
@@ -32,6 +32,7 @@ export default {
     return {
       isVisible: false,
       currentData: [],
+      value: [],
     };
   },
   // 指令是一个方法，有自己的生命周期  clickOutside(){} 这样写 数据绑定-bind 和 更新的时候执行-update
@@ -42,6 +43,9 @@ export default {
     },
     toggle() {
       this.isVisible = !this.isVisible;
+    },
+    change() {
+      this.$emit('change', this.value);
     },
   },
   components: {
@@ -56,5 +60,7 @@ export default {
   .title
     width 150px
     height 30px
+    line-height: 30px
+    text-indent 5px
     border 1px solid #ccc
 </style>

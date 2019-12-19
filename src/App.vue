@@ -30,7 +30,7 @@
 
 
       <h3 style="margin-top: 30px;">--------第三课--级联组件------</h3>
-      <Cascade :options="options"></Cascade>
+      <Cascade :options="options" @change="change"></Cascade>
     </div>
 </template>
 <script>
@@ -43,8 +43,18 @@ import List from './components/List.vue';
 import List1 from './components/List1.vue';
 
 import Cascade from './cascade/cascade.vue';
+import cityData from './data/data.json';
+
+const fetchData = pid => new Promise((resolve) => {
+  setTimeout(() => {
+    resolve(cityData.filter(item => item.pid === pid));
+  }, 500);
+});
 
 export default {
+  async created() {
+    // this.options = await fetchData('0');
+  },
   // 生命周期 不能是created
   mounted() {
     this.$broadcast('say');
@@ -102,14 +112,32 @@ export default {
             {
               value: 'gugong',
               label: '故宫',
+              children: [
+                {
+                  value: '故宫1',
+                  label: '故宫2',
+                },
+              ],
             },
             {
               value: 'tiantan',
               label: '天坛',
+              children: [
+                {
+                  value: '天坛1',
+                  label: '天坛2',
+                },
+              ],
             },
             {
               value: 'wangfujing',
               label: '王府井',
+              children: [
+                {
+                  value: '王府井1',
+                  label: '王府井2',
+                },
+              ],
             },
           ],
         },
@@ -138,6 +166,12 @@ export default {
                 {
                   value: 'shizilin',
                   label: '狮子林',
+                  children: [
+                    {
+                      value: '狮子林2',
+                      label: '狮子林2',
+                    },
+                  ],
                 },
               ],
             },
@@ -186,6 +220,15 @@ export default {
           },
         },
       })]);
+    },
+    async change(value) {
+      console.log(value);
+      const currentItem = value[value.length - 1];
+      console.log(currentItem.id);
+      const children = await fetchData(currentItem.id);
+      console.log(children);
+      this.$set(this.options[this.options.findIndex(item => item.id === currentItem.id)], 'children', children);
+      console.log(this.options);
     },
   },
   components: {

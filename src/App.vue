@@ -22,7 +22,7 @@
             <!-- 普通插槽是在父组件中执行 -->
             <!-- 子组件中执行的是 作用域插槽  a是插槽名字 -->
             <template v-slot:a="{item,a}">
-                <p>{{item}} {{a}}</p>
+                <span>{{item}} {{a}}，</span>
             </template>
         </List1>
 
@@ -30,7 +30,7 @@
 
 
       <h3 style="margin-top: 30px;">--------第三课--级联组件------</h3>
-      <Cascade :options="options" @change="change"></Cascade>
+      <Cascade :options="asyncOptions" :loadData="loadData"></Cascade>
     </div>
 </template>
 <script>
@@ -53,7 +53,7 @@ const fetchData = pid => new Promise((resolve) => {
 
 export default {
   async created() {
-    // this.options = await fetchData('0');
+    this.asyncOptions = await fetchData('0');
   },
   // 生命周期 不能是created
   mounted() {
@@ -61,7 +61,7 @@ export default {
   },
   data() {
     return {
-      tag: 'h3',
+      tag: 'span',
       currentIndex: -1,
       columns: [
         {
@@ -177,11 +177,12 @@ export default {
             },
           ],
         }],
+      asyncOptions: [],
     };
   },
   methods: {
     render(h, data) { // data是函数式组件在list组件中每次循环出来的结果
-      return h(this.tag, data);
+      return h(this.tag, { style: { marginRight: '10px' } }, data);
     },
     tableRender(h, { row, column, index }) {
       return h('div', [h('h1', {
@@ -222,13 +223,16 @@ export default {
       })]);
     },
     async change(value) {
-      console.log(value);
       const currentItem = value[value.length - 1];
-      console.log(currentItem.id);
       const children = await fetchData(currentItem.id);
-      console.log(children);
-      this.$set(this.options[this.options.findIndex(item => item.id === currentItem.id)], 'children', children);
-      console.log(this.options);
+      // eslint-disable-next-line max-len
+      // this.$set(this.asyncOptions[this.asyncOptions.findIndex(item => item.id === currentItem.id)], 'children', children);
+      this.$set(currentItem, 'children', children);
+      console.log(this.asyncOptions);
+    },
+    async loadData(id, callback) {
+      const children = await fetchData(id);
+      callback(children);
     },
   },
   components: {

@@ -23,6 +23,9 @@ import cascadeItem from './cascadeItem.vue';
 export default {
   name: 'Cascade',
   props: {
+    loadData: {
+      type: Function,
+    },
     options: {
       type: Array,
       default: () => [],
@@ -44,8 +47,30 @@ export default {
     toggle() {
       this.isVisible = !this.isVisible;
     },
-    change() {
-      this.$emit('change', this.value);
+    change(value) {
+      const lastItem = value[value.length - 1];
+      const { id } = lastItem;
+      if (this.loadData) {
+        this.loadData(id, children => this.handle(id, children));
+      }
+      this.$emit('input', value);
+    },
+    handle(id, children) {
+      let stack = [...this.options];
+      let index = 0;
+      let currentItem;
+      // eslint-disable-next-line no-plusplus
+      while (stack[index++]) {
+        currentItem = stack[index];
+        if (currentItem.id !== id) {
+          if (currentItem.children) {
+            stack = stack.concat(currentItem.children);
+          }
+        } else {
+          break;
+        }
+      }
+      this.$set(currentItem, 'children', children);
     },
   },
   components: {
@@ -58,7 +83,7 @@ export default {
   .cascade
    display inline-block
   .title
-    width 150px
+    width 210px
     height 30px
     line-height: 30px
     text-indent 5px

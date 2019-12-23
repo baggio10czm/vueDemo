@@ -1,7 +1,6 @@
 <template>
     <div>
         父组件钱数： {{mny}}
-        <hr>
         <!-- <Son1 :value="mny" @update:value="(value)=>this.mny=value"></Son1> -->
 
         <!-- <Son1 :value.sync="mny"></Son1> -->
@@ -13,7 +12,6 @@
 
         <!-- 多层级如何传递数据 $parent -->
 
-        <hr>
         <!-- ------ -->
         <Son2 name="珠峰" age="10" address="回龙观" @son="son"></Son2>
 

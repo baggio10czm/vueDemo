@@ -8,7 +8,7 @@
 </template>
 
 <script>
-// 可以在全局上挂个事件 ，当点击的时候校验一下点击的是否是cascader中的内容
+// 可以在全局上挂个事件 ，当点击的时候校验一下点击的是否是cascade中的内容
 // 判断当前点击的是否在某个元素
 
 // 如果你希望对某个元素拥有一系列的操作 你可以封装一个指令 （自定义指令）
@@ -59,9 +59,10 @@ export default {
       let stack = [...this.options];
       let index = 0;
       let currentItem;
-      // eslint-disable-next-line no-plusplus
-      while (stack[index++]) {
-        currentItem = stack[index];
+      // eslint-disable-next-line no-plusplus,no-cond-assign
+      while (stack[index]) {
+        // eslint-disable-next-line no-plusplus
+        currentItem = stack[index++];
         if (currentItem.id !== id) {
           if (currentItem.children) {
             stack = stack.concat(currentItem.children);

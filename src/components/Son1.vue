@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <p>儿子1: {{value}} <button @click="change">点击修改</button></p>
+    <div style="padding: 10px;">
+        <p style="margin-bottom: 10px;">儿子1: {{value}} <button @click="change">点击修改</button></p>
         <Grandson1 :value="value" @say="say"></Grandson1>
     </div>
 </template>
